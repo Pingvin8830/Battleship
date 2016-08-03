@@ -13,8 +13,3 @@ def _yes_no (Question):
 		return 1
 	else:
 		return 0
-
-print (Header)
-print ('-------------------------------')
-for i in range (len (MainMenu)):
-	print ("%d. %s" % (MainMenu [i][0], MainMenu [i][1]))
