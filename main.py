@@ -1,19 +1,17 @@
-#!/bin/python
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 VERSION = '0.0'
 
-import sys, os
-sys.path.append ('/data/git/Battleship/lib')
+from os import system as OS_SYSTEM
+from sys import path as SYSPATH
+SYSPATH.append ('lib')
 import menu
 
-Doing = 'start'
+MainMenu = menu.Menu()
+Doing = 'Начать игру'
 
-while Doing != 'exit':
-	
-	os.system ('clear')
-	print (menu.Header)
-	print ('-------------------------------')
-	for i in range (len (menu.MainMenu)):
-		print ("%d. %s" % (menu.MainMenu [i][0], menu.MainMenu [i][1]))
+while Doing != 'Выход':
 
-	Doing = input ('Что делать? ')
+	OS_SYSTEM ('clear')
+	Doing = MainMenu.render()
