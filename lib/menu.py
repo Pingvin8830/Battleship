@@ -1,6 +1,8 @@
 #!/usr/bin/python3.5
 # -*- coding: utf-8 -*-
 
+from os import system as OS_SYSTEM
+
 class Menu():
 	'''Стандартный класс меню'''
 	def __init__(self):
@@ -13,6 +15,7 @@ class Menu():
 					 'Планы']
 	def render(self):
 		'''Отображение меню на экране'''
+		OS_SYSTEM ('clear')
 		print (self.Header)
 		print ('-------------------------------')
 		for i in list (range (1, len (self.Menu))) + [0]:
