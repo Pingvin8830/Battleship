@@ -1,19 +1,14 @@
-#!/bin/python
+#!/usr/bin/python3.5
+# -*- coding: utf-8 -*-
+
+from sys import path as SYSPATH
+SYSPATH.append ('lib')
+from menu import Menu
 
 VERSION = '0.0'
 
-import sys, os
-sys.path.append ('/data/git/Battleship/lib')
-import menu
+MainMenu = Menu()
+Doing = ''
 
-Doing = 'start'
-
-while Doing != 'exit':
-	
-	os.system ('clear')
-	print (menu.Header)
-	print ('-------------------------------')
-	for i in range (len (menu.MainMenu)):
-		print ("%d. %s" % (menu.MainMenu [i][0], menu.MainMenu [i][1]))
-
-	Doing = input ('Что делать? ')
+while Doing != 'Выход':
+	Doing = MainMenu.render()
