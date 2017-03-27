@@ -19,9 +19,9 @@ path.append ('/data/git/Battleship/images')
 
 import pygame
 import random
-from color_vars   import BLACK, WHITE
+from color_vars   import BLACK, WHITE, GREEN
 from draw_classes import Menu, Sight
-from game_classes import Player, Field
+from game_classes import Player, Field, Cell
 from main_vars    import VERSION
 from screen_vars  import SCREEN_SIZE
 
@@ -130,10 +130,16 @@ while current_status != 'quit':
       sight = Sight ()
       is_win = False
 
-  if current_status == 'game' and comp.is_active:
-    x = random.randrange (Field.SIZE ['x'])
-    y = random.randrange (Field.SIZE ['y'])
-    comp.fire (player, x, y)
+  if current_status == 'game':
+    if   not comp.live:   is_win = 'comp'
+    elif not player.live: is_win = 'player'
+    if is_win:
+      current_status = 'win'
+      continue
+    if comp.is_active and not is_win:
+      x = random.randrange (Field.SIZE ['x'])
+      y = random.randrange (Field.SIZE ['y'])
+      comp.fire (player, x, y)
 
   screen.fill (WHITE)
 
@@ -152,6 +158,14 @@ while current_status != 'quit':
     player.field.draw (screen,  10, 10)
     comp.field.draw   (screen, 320, 10)
     if player.is_active: sight.draw (screen)
+  elif current_status == 'win':
+    for koord in comp.field.list_cells:
+      comp.field.list_cells [koord].is_visible = True
+    player.field.draw (screen,  10, 10)
+    comp.field.draw   (screen, 320, 10)
+    font = pygame.font.Font (None, 50)
+    text = font.render ('%s выиграл.' % is_win, True, GREEN)
+    screen.blit (text, [10, 10 + Field.SIZE ['y'] * Cell.SIZE ['y'] + 10])
 
   pygame.display.flip ()
 
