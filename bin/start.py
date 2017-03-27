@@ -20,7 +20,7 @@ path.append ('/data/git/Battleship/images')
 import pygame
 import random
 from color_vars   import BLACK, WHITE
-from draw_classes import Menu
+from draw_classes import Menu, Sight
 from game_classes import Player, Field
 from main_vars    import VERSION
 from screen_vars  import SCREEN_SIZE
@@ -77,7 +77,18 @@ while current_status != 'quit':
 
               player.list_ships [i] = ship
               break
+    elif current_status == 'game':
+      if player.is_active:
+        if   event.key == pygame.K_UP:    sight.position ['y'] -= 1
+        elif event.key == pygame.K_DOWN:  sight.position ['y'] += 1
+        elif event.key == pygame.K_LEFT:  sight.position ['x'] -= 1
+        elif event.key == pygame.K_RIGHT: sight.position ['x'] += 1
 
+        if   sight.position ['x'] < 0:                    sight.position ['x'] = 0
+        elif sight.position ['x'] > Field.SIZE ['x'] - 1: sight.position ['x'] = Field.SIZE ['x'] - 1
+
+        if   sight.position ['y'] < 0:                    sight.position ['y'] = 0
+        elif sight.position ['y'] > Field.SIZE ['y'] - 1: sight.position ['y'] = Field.SIZE ['y'] - 1
   if current_status == 'new_game':
     player = Player ('human')
     player.is_active = True
@@ -111,6 +122,8 @@ while current_status != 'quit':
             comp.field.update (ship.list_cells, 'ship')
             comp.list_ships [i] = ship
       current_status = 'game'
+      sight = Sight ()
+      is_win = False
 
   screen.fill (WHITE)
 
@@ -128,6 +141,7 @@ while current_status != 'quit':
   elif current_status == 'game':
     player.field.draw (screen,  10, 10)
     comp.field.draw   (screen, 320, 10)
+    sight.draw (screen)
 
   pygame.display.flip ()
 
