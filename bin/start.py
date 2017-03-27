@@ -19,9 +19,10 @@ path.append ('/data/git/Battleship/images')
 
 import pygame
 from color_vars   import BLACK, WHITE
+from draw_classes import Menu
+from game_classes import Player
 from main_vars    import VERSION
 from screen_vars  import SCREEN_SIZE
-from draw_classes import Menu
 
 pygame.init ()
 
@@ -46,10 +47,18 @@ while current_status != 'quit':
         elif event.key == pygame.K_UP:   menu.moving ('prev')
         elif event.key == 13:            current_status = menu.get_status ()
 
+  if current_status == 'new_game':
+    player = Player ('human')
+    comp   = Player ('AI')
+    current_status = 'set_ships'
+
   screen.fill (WHITE)
 
   if current_status == 'menu':
     menu.draw (screen)
+  elif current_status == 'set_ships':
+    player.field.draw (screen,  10, 10)
+    comp.field.draw   (screen, 320, 10)
 
   pygame.display.flip ()
 
