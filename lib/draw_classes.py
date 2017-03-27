@@ -1,8 +1,9 @@
 #!/bin/python3
 
 import pygame
-from color_vars  import RED, GREEN, BLACK, WHITE
-from screen_vars import SCREEN_SIZE
+from color_vars   import RED, GREEN, BLACK, WHITE
+from game_classes import Cell
+from screen_vars  import SCREEN_SIZE
 
 class Item (object):
   '''Пункт меню'''
@@ -69,6 +70,27 @@ class Menu (object):
         doing = item.doing
         break
     return doing
+
+class Sight (object):
+  '''Прицел'''
+  def __init__ (self):
+    self.position = {
+      'x': 4,
+      'y': 4,
+    }
+
+  def draw (self, screen):
+    start_x = self.position ['x'] * Cell.SIZE ['x'] + 320
+    start_y = self.position ['y'] * Cell.SIZE ['y'] +  10
+    center_x = start_x + Cell.SIZE ['x'] / 2
+    center_y = start_y + Cell.SIZE ['y'] / 2
+    end_x = start_x + Cell.SIZE ['x']
+    end_y = start_y + Cell.SIZE ['y']
+    pygame.draw.ellipse (screen, RED, [start_x + 2,  start_y + 2, Cell.SIZE ['x'] - 4, Cell.SIZE ['y'] - 4], 1)
+    pygame.draw.line    (screen, RED, [start_x,      center_y    ], [center_x - 3, center_y    ], 1)
+    pygame.draw.line    (screen, RED, [center_x + 3, center_y    ], [end_x,        center_y    ], 1)
+    pygame.draw.line    (screen, RED, [center_x,     start_y     ], [center_x,     center_y - 3], 1)
+    pygame.draw.line    (screen, RED, [center_x,     center_y + 3], [center_x,     end_y       ], 1)
 
 if __name__ == '__main__':
   print ('Модуль с классами для отображения')
