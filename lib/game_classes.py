@@ -49,6 +49,9 @@ class Field (object):
     for cell in list_cells:
       if cell in self.list_cells: self.list_cells [cell].status = status
 
+  def get_status (self, x, y):
+    return self.list_cells [(x, y)].status
+
 class Ship (object):
   '''Корабль'''
   def __init__ (self, length):
@@ -117,6 +120,17 @@ class Player (object):
       Ship (1),
     ]
     self.is_active = False
+
+  def fire (self, player, x, y):
+    current_status = player.field.get_status (x, y)
+    if current_status == 'clear' or current_status == 'oreol':
+      player.field.list_cells [(x, y)].status = 'miss'
+      player.field.list_cells [(x, y)].is_visible = True
+      self.is_active   = False
+      player.is_active = True
+    elif current_status == 'ship':
+      player.field.list_cells [(x, y)].status = 'wounded'
+      player.field.list_cells [(x, y)].is_visible = True
 
 if __name__ == '__main__':
   print ('Модуль с игровыми классами')
