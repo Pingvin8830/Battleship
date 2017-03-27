@@ -10,8 +10,8 @@ class Cell (object):
     'wounded': RED,
     'kill':    BLUE,
     'miss':    BLACK,
-    'ship':    RED,
-    'oreol':   BLUE,
+    'ship':    WHITE,
+    'oreol':   WHITE,
   }
 
   SIZE = {
