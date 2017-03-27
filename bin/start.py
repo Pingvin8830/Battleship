@@ -77,18 +77,23 @@ while current_status != 'quit':
 
               player.list_ships [i] = ship
               break
-    elif current_status == 'game':
-      if player.is_active:
-        if   event.key == pygame.K_UP:    sight.position ['y'] -= 1
-        elif event.key == pygame.K_DOWN:  sight.position ['y'] += 1
-        elif event.key == pygame.K_LEFT:  sight.position ['x'] -= 1
-        elif event.key == pygame.K_RIGHT: sight.position ['x'] += 1
 
-        if   sight.position ['x'] < 0:                    sight.position ['x'] = 0
-        elif sight.position ['x'] > Field.SIZE ['x'] - 1: sight.position ['x'] = Field.SIZE ['x'] - 1
+      elif current_status == 'game':
+        if player.is_active:
+          if   event.key == pygame.K_UP:    sight.position ['y'] -= 1
+          elif event.key == pygame.K_DOWN:  sight.position ['y'] += 1
+          elif event.key == pygame.K_LEFT:  sight.position ['x'] -= 1
+          elif event.key == pygame.K_RIGHT: sight.position ['x'] += 1
 
-        if   sight.position ['y'] < 0:                    sight.position ['y'] = 0
-        elif sight.position ['y'] > Field.SIZE ['y'] - 1: sight.position ['y'] = Field.SIZE ['y'] - 1
+          if   sight.position ['x'] < 0:                    sight.position ['x'] = 0
+          elif sight.position ['x'] > Field.SIZE ['x'] - 1: sight.position ['x'] = Field.SIZE ['x'] - 1
+
+          if   sight.position ['y'] < 0:                    sight.position ['y'] = 0
+          elif sight.position ['y'] > Field.SIZE ['y'] - 1: sight.position ['y'] = Field.SIZE ['y'] - 1
+
+          if event.key == 13:
+            player.fire (comp, sight.position ['x'], sight.position ['y'])
+
   if current_status == 'new_game':
     player = Player ('human')
     player.is_active = True
@@ -125,6 +130,11 @@ while current_status != 'quit':
       sight = Sight ()
       is_win = False
 
+  if current_status == 'game' and comp.is_active:
+    x = random.randrange (Field.SIZE ['x'])
+    y = random.randrange (Field.SIZE ['y'])
+    comp.fire (player, x, y)
+
   screen.fill (WHITE)
 
   if current_status == 'menu':
@@ -141,7 +151,7 @@ while current_status != 'quit':
   elif current_status == 'game':
     player.field.draw (screen,  10, 10)
     comp.field.draw   (screen, 320, 10)
-    sight.draw (screen)
+    if player.is_active: sight.draw (screen)
 
   pygame.display.flip ()
 
