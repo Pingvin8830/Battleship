@@ -94,6 +94,9 @@ while current_status != 'quit':
           if event.key == 13:
             player.fire (comp, sight.position ['x'], sight.position ['y'])
 
+      elif current_status == 'win':
+        if event.key == 13: current_status = 'menu'
+
   if current_status == 'new_game':
     player = Player ('human')
     player.is_active = True
