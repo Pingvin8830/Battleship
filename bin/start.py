@@ -18,6 +18,7 @@ path.append ('/data/git/Battleship/lib')
 path.append ('/data/git/Battleship/images')
 
 import pygame
+import random
 from color_vars   import BLACK, WHITE
 from draw_classes import Menu
 from game_classes import Player, Field
@@ -92,9 +93,24 @@ while current_status != 'quit':
       if not ship.is_set:
         is_set = False
         break
-    for ship in comp.list_ships:
-      if not ship.is_set:
-        is_set = False
+    if is_set:
+      for i in range (len (comp.list_ships)):
+        ship = comp.list_ships [i]
+        while not ship.is_set:
+          is_good = False
+          while not is_good:
+            ship.orient = random.choice (('horizont', 'vertical'))
+            ship.start_cell = (random.randrange (Field.SIZE ['x']), random.randrange (Field.SIZE ['y']))
+            is_good = True
+            if ship.orient == 'horizont' and ship.start_cell [0] + ship.length > Field.SIZE ['x']: is_good = False
+            if ship.orient == 'vertical' and ship.start_cell [1] + ship.length > Field.SIZE ['y']: is_good = False
+          ship.update_set_status (comp.field.list_cells)
+          if ship.set_status:
+            ship.is_set = True
+            comp.field.update (ship.oreol,      'oreol')
+            comp.field.update (ship.list_cells, 'ship')
+            comp.list_ships [i] = ship
+      current_status = 'game'
 
   screen.fill (WHITE)
 
@@ -109,6 +125,9 @@ while current_status != 'quit':
         ship.update_set_status (player.field.list_cells)
         ship.draw (screen, player.type)
         break
+  elif current_status == 'game':
+    player.field.draw (screen,  10, 10)
+    comp.field.draw   (screen, 320, 10)
 
   pygame.display.flip ()
 
