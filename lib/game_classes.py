@@ -10,7 +10,7 @@ class Cell (object):
     'wounded': RED,
     'kill':    BLUE,
     'miss':    BLACK,
-    'ship':    WHITE,
+    'ship':    GREEN,
     'oreol':   WHITE,
   }
 
