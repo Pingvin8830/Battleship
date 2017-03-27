@@ -120,6 +120,7 @@ class Player (object):
       Ship (1),
     ]
     self.is_active = False
+    self.live      = len (self.list_ships)
 
   def fire (self, player, x, y):
     current_status = player.field.get_status (x, y)
@@ -131,6 +132,13 @@ class Player (object):
     elif current_status == 'ship':
       player.field.list_cells [(x, y)].status = 'wounded'
       player.field.list_cells [(x, y)].is_visible = True
+      for ship in player.list_ships:
+        if (x, y) in ship.list_cells:
+          ship.list_damage.append ((x, y))
+          if len (ship.list_damage) == ship.length:
+            self.live -= 1
+            for koord in ship.list_cells:
+              player.field.list_cells [koord].status = 'kill'
 
 if __name__ == '__main__':
   print ('Модуль с игровыми классами')
