@@ -4,8 +4,6 @@ import pygame
 from color_vars  import RED, GREEN, BLACK, WHITE
 from screen_vars import SCREEN_SIZE
 
-pygame.init ()
-
 class Item (object):
   '''Пункт меню'''
   COLORS = {
@@ -14,7 +12,6 @@ class Item (object):
     'hidden':  WHITE,
     'click':   GREEN,
   }
-  FONT = pygame.font.Font (None, 30)
 
   def __init__ (self, x, y, text, doing, status = 'passive'):
     self.text   = text
@@ -22,10 +19,11 @@ class Item (object):
     self.x      = x
     self.y      = y
     self.doing  = doing
+    self.font = pygame.font.Font (None, 30)
 
   def draw (self, screen):
     self.color = self.COLORS [self.status]
-    text = self.FONT.render (self.text, True, self.color)
+    text = self.font.render (self.text, True, self.color)
     screen.blit (text, [self.x, self.y])
 
 class Menu (object):
