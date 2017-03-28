@@ -14,8 +14,13 @@
 '''
 
 from sys import path
-path.append ('/data/git/Battleship/lib')
-path.append ('/data/git/Battleship/images')
+
+#path.append ('/data/git/Battleship/lib')
+#path.append ('/data/git/Battleship/images')
+path.append ('lib')
+path.append ('images')
+path.append ('../lib')
+path.append ('../images')
 
 import pygame
 import random
