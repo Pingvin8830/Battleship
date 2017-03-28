@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 
 WHITE  = (255, 255, 255)
 RED    = (255,   0,   0)

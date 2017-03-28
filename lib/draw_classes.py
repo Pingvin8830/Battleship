@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 
 import pygame
 from color_vars   import RED, GREEN, BLACK, WHITE
