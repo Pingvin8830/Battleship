@@ -168,7 +168,8 @@ while current_status != 'quit':
     comp.field.draw   (screen, 320, 10)
     font = pygame.font.Font (None, 50)
     text = font.render ('%s выиграл.' % is_win, True, GREEN)
-    screen.blit (text, [10, 10 + Field.SIZE ['y'] * Cell.SIZE ['y'] + 10])
+    if is_win == 'comp': screen.blit (text, [ 10, 10 + Field.SIZE ['y'] * Cell.SIZE ['y'] + 10])
+    else:                screen.blit (text, [320, 10 + Field.SIZE ['y'] * Cell.SIZE ['y'] + 10])
 
   pygame.display.flip ()
 
