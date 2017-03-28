@@ -1,7 +1,7 @@
 #!/bin/python3
 
 import pygame
-from color_vars import WHITE, BLACK, RED, BLUE, GREEN
+from color_vars import WHITE, BLACK, RED, BLUE, GREEN, BIRUZA
 
 class Cell (object):
   '''Ячейка поля'''
@@ -9,7 +9,7 @@ class Cell (object):
     'clear':   WHITE,
     'wounded': RED,
     'kill':    BLUE,
-    'miss':    BLACK,
+    'miss':    BIRUZA,
     'ship':    GREEN,
     'oreol':   WHITE,
   }
